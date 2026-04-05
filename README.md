@@ -15,7 +15,7 @@ sentiment".
 > Thanks to the recent Claude Code source leak, we now know it just uses a mere
 > regex to determine sentiment :laughing:.
 
-### Step 2: Use Rust for exclaimation marks
+### Step 2: Use Rust for exclamation marks
 
 For extra fun, use Rust which will cause each log invocation to have a punchy
 `!`:
@@ -25,10 +25,11 @@ For extra fun, use Rust which will cause each log invocation to have a punchy
 pub fn verify(path: String) {
     godammit!(path, "Verifying file");
 
-    if let Ok(content) = std::fs::read_to_string(&path) else {
+    let Ok(content) = std::fs::read_to_string(&path) else {
         shit!("Failed to read file");
-    }
-    if let Ok(msg) = Message::from_string(&content) else {
+        return;
+    };
+    let Ok(msg) = Message::from_string(&content) else {
         fuck!("Invalid message");
         return;
     };
@@ -126,7 +127,7 @@ verbose by default.
 I'll repeat similar advice I have for comments in code: write the minimum number
 of words necessary to communicate something useful. For comments, they should
 generally be WHY statements rather than HOW. For logs, they should mainly be
-about WHAT happend. It's up to reader to determine the WHY.
+about WHAT happened. It's up to reader to determine the WHY.
 
 Write logs as succinctly as possible because it reduces the amount of cognitive
 overhead imposed on debuggers of the application in the future.
