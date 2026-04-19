@@ -17,8 +17,7 @@ sentiment".
 
 ### Step 2: Use Rust for exclamation marks
 
-For extra fun, use Rust which will cause each log invocation to have a punchy
-`!`:
+For extra fun, use Rust which will give each log invocation a punchy `!`:
 
 ```rust
 /// Check that the given artifact was signed by the private key.
@@ -71,31 +70,6 @@ Just don't use `error`! That's probably your first instinct, but then you lose
 the useful quality that _all errors are bad_. A properly written program will
 probably have `failure`s, but it shouldn't have `error`s.
 
-## Structured logging
-
-Once I discovered the elegance of structured logging, I never went back. For
-example, this now makes me cringe:
-
-```py
-log.info(f"Started the car in {time} seconds")
-```
-
-Thanks to [structlog](https://github.com/hynek/structlog) in Python and
-[tracing](https://crates.io/crates/tracing) in Rust, you can separate the
-dynamic info from the actual log message:
-
-```py
-log.info("Started the car", time_seconds=time)
-```
-
-```rs
-info!(time_seconds=time, "Started the car")
-```
-
-Where this pattern really shines is when you're recording your application's
-logs to a database. Rather than having to write brittle patterns to "unformat"
-your plaintext logs, it just works the way you want it to without extra effort.
-
 ## Logging tense
 
 What log message do you think is better?
@@ -121,6 +95,31 @@ helpful one a higher level. For example:
 
 This gives the option to have both conveniences, without making your logs too
 verbose by default.
+
+## Structured logging
+
+Once I discovered the elegance of structured logging, I never went back. For
+example, this now makes me cringe:
+
+```py
+log.info(f"Started the car in {time} seconds")
+```
+
+Thanks to [structlog](https://github.com/hynek/structlog) in Python and
+[tracing](https://crates.io/crates/tracing) in Rust, you can separate the
+dynamic info from the actual log message:
+
+```py
+log.info("Started the car", time_seconds=time)
+```
+
+```rs
+info!(time_seconds=time, "Started the car")
+```
+
+Where this pattern really shines is when you're recording your application's
+logs to a database. Rather than having to write brittle patterns to "unformat"
+your plaintext logs, it just works the way you want it to without extra effort.
 
 ## Watch your word count
 
